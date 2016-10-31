@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featuremodels>
+	<featuremodel name="nivreeager">
+<feature>Attraction(InputColumn(LEMMA, Stack[0]), InputColumn(CPOSTAG, Stack[0]), InputColumn(LEMMA, Input[0]), InputColumn(CPOSTAG, Input[0]))</feature>
+	
+<feature>InputColumn(LEMMA, ldep(Input[0]))</feature>
+<feature>InputColumn(LEMMA, lsib(Input[0]))</feature>
+<feature>InputColumn(LEMMA, ldep(Stack[0]))</feature>
+<feature>Merge(InputColumn(LEMMA, ldep(Input[0]), InputColumn(LEMMA, Stack[0]))</feature>
+<feature>InputColumn(CPOSTAG, rdep(Stack[0]))</feature>
+<feature>Split(InputColumn(FEATS, Input[0]),\|)</feature>
+<feature>Split(InputColumn(FEATS, Stack[0]),\|)</feature>
+	
+		<feature>InputColumn(CPOSTAG, Stack[0])</feature>
+		<feature>InputColumn(CPOSTAG, Stack[1])</feature>
+		<feature>InputColumn(CPOSTAG, head(Stack[0]))</feature>
+		<feature>InputColumn(CPOSTAG, Input[0])</feature>
+		<feature>InputColumn(CPOSTAG, Input[1])</feature>
+		<feature>InputColumn(CPOSTAG, Input[2])</feature>
+		<feature>InputColumn(CPOSTAG, Input[3])</feature>
+		<feature>InputColumn(LEMMA, Stack[0])</feature>			
+		<feature>InputColumn(LEMMA, head(Stack[0]))</feature>
+		<feature>InputColumn(LEMMA, Input[0])</feature>
+		<feature>InputColumn(LEMMA, Input[1])</feature>
+		<feature>Merge(InputColumn(CPOSTAG, Stack[0]), InputColumn(CPOSTAG, Input[0]))</feature>
+		<feature>Merge(InputColumn(LEMMA, Stack[0]), InputColumn(LEMMA, Input[0]))</feature>
+		<feature>Merge(InputColumn(CPOSTAG, Stack[0]), InputColumn(LEMMA, Stack[0]))</feature>
+		<feature>Merge(InputColumn(CPOSTAG, Input[0]), InputColumn(LEMMA, Input[0]))</feature>
+		<feature>Merge(Merge(InputColumn(CPOSTAG, head(Stack[0])), InputColumn(LEMMA, head(Stack[0]))), Merge(InputColumn(CPOSTAG, Stack[0]), InputColumn(LEMMA, Stack[0])))</feature>
+		<feature>Merge3(InputColumn(CPOSTAG, Stack[1]), InputColumn(CPOSTAG, Stack[0]), InputColumn(CPOSTAG, Input[0]))</feature>
+		<feature>Merge3(InputColumn(CPOSTAG, Stack[0]), InputColumn(CPOSTAG, Input[0]), InputColumn(CPOSTAG, Input[1]))</feature>
+		<feature>Merge3(InputColumn(CPOSTAG, Input[0]), InputColumn(CPOSTAG, Input[1]), InputColumn(CPOSTAG, Input[2]))</feature>
+		<feature>Merge3(InputColumn(CPOSTAG, Input[1]), InputColumn(CPOSTAG, Input[2]), InputColumn(CPOSTAG, Input[3]))</feature>
+		<feature>OutputColumn(DEPREL, head(Stack[0]))</feature>
+		<feature>OutputColumn(DEPREL, head(Input[0]))</feature>
+		<feature>OutputColumn(DEPREL, ldep(Stack[0]))</feature>
+		<feature>OutputColumn(DEPREL, rsib(ldep(Stack[0])))</feature>
+		<feature>OutputColumn(DEPREL, rdep(Stack[0]))</feature>
+		<feature>OutputColumn(DEPREL, lsib(rdep(Stack[0])))</feature>
+		<feature>OutputColumn(DEPREL, ldep(Input[0]))</feature>
+		<feature>OutputColumn(DEPREL, rsib(ldep(Input[0])))</feature>
+		<feature>OutputColumn(DEPREL, rdep(Input[0]))</feature>
+		<feature>OutputColumn(DEPREL, lsib(rdep(Input[0])))</feature>
+		<feature>Merge3(InputColumn(CPOSTAG, Stack[0]), OutputColumn(DEPREL, ldep(Stack[0])), OutputColumn(DEPREL, rdep(Stack[0])))</feature>
+		<feature>Merge3(InputColumn(CPOSTAG, Input[0]), OutputColumn(DEPREL, ldep(Input[0])), OutputColumn(DEPREL, rdep(Input[0])))</feature>
+		<feature>Merge3(InputColumn(CPOSTAG, head(Stack[0])), OutputColumn(DEPREL, head(Stack[0])), InputColumn(CPOSTAG, Stack[0]))</feature>
+		<feature>Merge3(InputColumn(CPOSTAG, Stack[0]), OutputColumn(DEPREL, ldep(Stack[0])), InputColumn(CPOSTAG, ldep(Stack[0])))</feature>
+		<feature>Merge3(InputColumn(CPOSTAG, Stack[0]), OutputColumn(DEPREL, rdep(Stack[0])), InputColumn(CPOSTAG, rdep(Stack[0])))</feature>
+	</featuremodel>
+</featuremodels>

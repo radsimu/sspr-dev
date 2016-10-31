@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_apiexamples" default="compile.module.apiexamples">
+  <dirname property="module.apiexamples.basedir" file="${ant.file.module_apiexamples}"/>
+  
+  <property name="module.jdk.home.apiexamples" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.apiexamples" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.apiexamples" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.apiexamples" value="-encoding UTF-8 -source 1.6 -target 1.6 ${compiler.args}"/>
+  
+  <property name="apiexamples.output.dir" value="${module.apiexamples.basedir}/../../out/production/apiexamples"/>
+  <property name="apiexamples.testoutput.dir" value="${module.apiexamples.basedir}/../../out/test/apiexamples"/>
+  
+  <path id="apiexamples.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="apiexamples.module.production.classpath">
+    <path refid="${module.jdk.classpath.apiexamples}"/>
+    <path refid="library.maltparser-1.9.0.classpath"/>
+    <pathelement location="${maltparser-1.9.0_-_sspr.output.dir}"/>
+  </path>
+  
+  <path id="apiexamples.runtime.production.module.classpath">
+    <pathelement location="${apiexamples.output.dir}"/>
+    <path refid="library.maltparser-1.9.0.classpath"/>
+    <path refid="maltparser-1.9.0_-_sspr.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="apiexamples.module.classpath">
+    <path refid="${module.jdk.classpath.apiexamples}"/>
+    <pathelement location="${apiexamples.output.dir}"/>
+    <path refid="library.maltparser-1.9.0.classpath"/>
+    <pathelement location="${maltparser-1.9.0_-_sspr.testoutput.dir}"/>
+    <pathelement location="${maltparser-1.9.0_-_sspr.output.dir}"/>
+  </path>
+  
+  <path id="apiexamples.runtime.module.classpath">
+    <pathelement location="${apiexamples.testoutput.dir}"/>
+    <pathelement location="${apiexamples.output.dir}"/>
+    <path refid="library.maltparser-1.9.0.classpath"/>
+    <path refid="maltparser-1.9.0_-_sspr.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.apiexamples">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.apiexamples">
+    <patternset refid="excluded.from.module.apiexamples"/>
+  </patternset>
+  
+  <path id="apiexamples.module.sourcepath">
+    <dirset dir="${module.apiexamples.basedir}">
+      <include name="srcex"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.apiexamples" depends="compile.module.apiexamples.production,compile.module.apiexamples.tests" description="Compile module apiexamples"/>
+  
+  <target name="compile.module.apiexamples.production" depends="register.custom.compilers,compile.module.maltparser-1.9.0_-_sspr" description="Compile module apiexamples; production classes">
+    <mkdir dir="${apiexamples.output.dir}"/>
+    <javac2 destdir="${apiexamples.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.apiexamples}/javac">
+      <compilerarg line="${compiler.args.apiexamples}"/>
+      <bootclasspath refid="apiexamples.module.bootclasspath"/>
+      <classpath refid="apiexamples.module.production.classpath"/>
+      <src refid="apiexamples.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.apiexamples"/>
+    </javac2>
+    
+    <copy todir="${apiexamples.output.dir}">
+      <fileset dir="${module.apiexamples.basedir}/srcex">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.apiexamples.tests" depends="register.custom.compilers,compile.module.apiexamples.production" description="compile module apiexamples; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.apiexamples" description="cleanup module">
+    <delete dir="${apiexamples.output.dir}"/>
+    <delete dir="${apiexamples.testoutput.dir}"/>
+  </target>
+</project>

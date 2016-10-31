@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<experiment>
+	<optioncontainer>
+		<optiongroup groupname="config">
+			<option name="name" value="trained_model"/>
+			<option name="flowchart" value="learn"/>
+			<option name="type" value ="singlemalt"/>
+		</optiongroup>
+		<optiongroup groupname="singlemalt">
+			<option name="parsing_algorithm" value="nivreeager"/>
+		</optiongroup>
+		<optiongroup groupname="input">
+			<option name="format" value="conllx"/>
+			<option name="charset" value="UTF-8"/>
+		</optiongroup>
+		<optiongroup groupname="singlemalt">
+			<option name="null_value" value="novalue"/>
+		</optiongroup>
+		<optiongroup groupname="nivre">
+		    <option name="allow_root" value="true"/>
+			<option name="allow_reduce" value="false"/>
+			<option name="enforce_tree" value="true"/>
+		</optiongroup>
+		<optiongroup groupname="lib">
+		    <option name="options" value="-s_4_-c_0.05_-e_0.03"/>
+		</optiongroup>
+		<optiongroup groupname="graph">
+			<option name="root_label" value="root"/>
+		</optiongroup>
+		<optiongroup groupname="guide">
+			<option name="features" value="train_features.xml"/>
+			<option name="learner" value="liblinear"/>
+		</optiongroup>
+	</optioncontainer>
+</experiment>
