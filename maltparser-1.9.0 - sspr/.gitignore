@@ -1,3 +1,5 @@
-/ro_data/posDictRoDiacr.txt
+/ro_data/*.txt
+/ro_data/*.mco
 /ro_data/batches/*.test
 /ro_data/batches/*.train
+/out
