@@ -18,9 +18,8 @@ public class TrainAndEvalBatch {
         MaltParserService service = new MaltParserService(0);
         service.runExperiment("-c maltmodel -f train_options.xml -i train_corpus_++.txt -m learn -ic UTF-8");
         service.runExperiment("-c maltmodel -f train_options.xml -i test_corpus_++.txt -o test_corpus_parsed.txt -m parse -ic UTF-8");
-        //Malt.main(new String[]{"-c", "maltmodel", "-f", "train_options.xml", "-i", "train_corpus_++.txt", "-m", "learn", "-ic", "UTF-8"});
-        //Malt.main(new String[]{"-c", "maltmodel", "-i", "test_corpus_++.txt", "-o", "test_corpus_parsed.txt", "-m", "parse", "-ic", "UTF-8"});
         Map<String, Float> eval = EvaluateMaltModel.Eval(new FileInputStream("test_corpus_++.txt"), new FileInputStream("test_corpus_parsed.txt"));
         System.out.println(eval.toString());
+        se.vxu.msi.malteval.MaltEvalConsole.main(new String[]{"-v", "1", "-g", "test_corpus_++.txt", "-s", "test_corpus_parsed.txt"});
     }
 }
