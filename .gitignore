@@ -3,3 +3,4 @@
 /ro_data/batches/*.test
 /ro_data/batches/*.train
 /out
+/ro_data/maltmodel

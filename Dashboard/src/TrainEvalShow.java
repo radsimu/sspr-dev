@@ -9,9 +9,10 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * Created by Planetaria on 10/26/2016.
+ * Created by radsimu on 10/26/2016.
+ * Train, Eval and show
  */
-public class TrainAndEvalBatch {
+public class TrainEvalShow {
     public static void main (String[] args) throws IOException, MaltChainedException {
         AddFeatureColumns.addFeatures(new File(args[0]), new File("train_corpus_++.txt"));
         AddFeatureColumns.addFeatures(new File(args[1]), new File("test_corpus_++.txt"));

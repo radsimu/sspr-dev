@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/InputEnrichFeatureAdapter/AddConllFeatures.iml" filepath="$PROJECT_DIR$/InputEnrichFeatureAdapter/AddConllFeatures.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Dashboard/Dashboard.iml" filepath="$PROJECT_DIR$/Dashboard/Dashboard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ExtractDerivations/ExtractDerivations.iml" filepath="$PROJECT_DIR$/ExtractDerivations/ExtractDerivations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/maltparser-1.9.0 - sspr/maltparser-1.9.0 - sspr.iml" filepath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/maltparser-1.9.0 - sspr.iml" />
+    </modules>
+  </component>
+</project>

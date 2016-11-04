@@ -1,13 +1,8 @@
-import org.maltparser.Malt;
-
 import java.io.*;
 import java.util.*;
 
 import uaic.postagger.tagger.Annotation;
-import uaic.postagger.tagger.HybridPOStagger;
 import uaic.postagger.tagger.MorphologicDictionary;
-
-import maltProcessing.EvaluateMaltModel;
 import uaic.segmenter.WordStruct;
 
 /**
@@ -66,11 +61,11 @@ public class AddFeatureColumns {
                 } else if (pos.startsWith("Nc")){
                     String possibleVerb = eventNouns.get(WordStruct.getCanonicalWord(lemma));
                     if (possibleVerb != null) {
-                        verbalFeats = verbalFeatsForVerb(possibleVerb, "Vmn");
+                        verbalFeats = verbalFeatsForVerb(possibleVerb, "Vmp"); //substantivizare indicata de derivarile extrase/inferate wordnet si uaic pos tagger
                     }
                 } else if (pos.startsWith("Af")) {
                     if (!word.endsWith("ele") && !word.endsWith("elor")) {
-                        verbalFeats = verbalFeatsForVerb(lemma, "Vmp"); //substantivizare din supin
+                        verbalFeats = verbalFeatsForVerb(lemma, "Vmp"); //participiu
                     }
                 }
 

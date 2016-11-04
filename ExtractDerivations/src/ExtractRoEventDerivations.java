@@ -266,11 +266,14 @@ public class ExtractRoEventDerivations {
 //            if (baseVerb != null) return baseVerb;
 //        }
 //        if (baseVerb == null) {
-//            possibleVerb = lemma + "a"; //+a = Vmn schimb, accident, șantaj, partaj
+//            possibleVerb = lemma + "a"; //+a = Vmn schimb, accident, șantaj, partaj - regula asta nu e buna pt ca genereaza multe perechi eronate (ex parlament, caz etc.)
 //            baseVerb = isVerb(possibleVerb, "Vmn");
 //            if (baseVerb != null) return baseVerb;
 //        }
 
+        possibleVerb = lemma;
+        baseVerb = isVerb(possibleVerb, "Vmp");
+        if (baseVerb != null) return baseVerb;
 
         return null;
     }

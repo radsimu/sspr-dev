@@ -4,14 +4,15 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$" type="java-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="AddConllFeatures" />
+    <orderEntry type="module" module-name="maltparser-1.9.0 - sspr" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../lib/liblinear-1.8.jar!/" />
+          <root url="jar://$MODULE_DIR$/../lib/DepEval.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -20,16 +21,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../lib/libsvm.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../lib/log4j.jar!/" />
+          <root url="jar://$MODULE_DIR$/../lib/MaltEval.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
