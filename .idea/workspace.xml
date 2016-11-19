@@ -2,43 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="984477e2-ffbb-48ec-9e99-e3ced3824632" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/description.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/project-template.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/InputEnrichFeatureAdapter/InputEnrichFeatureAdapter.iml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/.idea/copyright/profiles_settings.xml" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/.idea/libraries/lib.xml" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/.idea/libraries/maltparser_1_9_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/maltparser_1_9_0.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/.idea/uiDesigner.xml" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/ExtractDerivations/ExtractDerivations.iml" afterPath="$PROJECT_DIR$/ExtractDerivations/ExtractDerivations.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/ExtractDerivations/src/ExtractRoEventDerivations.java" afterPath="$PROJECT_DIR$/ExtractDerivations/src/ExtractRoEventDerivations.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/InputEnrichFeatureAdapter/src/AddFeatureColumns.java" afterPath="$PROJECT_DIR$/InputEnrichFeatureAdapter/src/AddFeatureColumns.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/InputEnrichFeatureAdapter/src/TrainAndEvalBatch.java" afterPath="$PROJECT_DIR$/Dashboard/src/TrainEvalShow.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/examples/apiexamples/apiexamples.iml" afterPath="$PROJECT_DIR$/Dashboard/Dashboard.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/lib/DepEval.jar" afterPath="$PROJECT_DIR$/lib/DepEval.jar" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/lib/MaltEval.jar" afterPath="$PROJECT_DIR$/lib/MaltEval.jar" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/lib/PosTagger.jar" afterPath="$PROJECT_DIR$/lib/PosTagger.jar" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/lib/liblinear-1.8.jar" afterPath="$PROJECT_DIR$/lib/liblinear-1.8.jar" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/lib/libsvm.jar" afterPath="$PROJECT_DIR$/lib/libsvm.jar" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/lib/log4j.jar" afterPath="$PROJECT_DIR$/lib/log4j.jar" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/ro_data/add_features.sh" afterPath="$PROJECT_DIR$/ro_data/add_features.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/ro_data/batches/unzip-me-here.zip" afterPath="$PROJECT_DIR$/ro_data/batches/unzip-me-here.zip" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/ro_data/cross_eval.sh" afterPath="$PROJECT_DIR$/ro_data/cross_eval.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/ro_data/error_viz.sh" afterPath="$PROJECT_DIR$/ro_data/error_viz.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/ro_data/partial_ro_derivations/ro_derivations_auto.txt" afterPath="$PROJECT_DIR$/ro_data/partial_ro_derivations/ro_derivations_auto.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/ro_data/partial_ro_derivations/ro_derivations_pwn_aligned.txt" afterPath="$PROJECT_DIR$/ro_data/partial_ro_derivations/ro_derivations_pwn_aligned.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/ro_data/train_eval_batch.sh" afterPath="$PROJECT_DIR$/ro_data/train_eval_batch.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/ro_data/train_features.xml" afterPath="$PROJECT_DIR$/ro_data/train_features.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/ro_data/train_format.xml" afterPath="$PROJECT_DIR$/ro_data/train_format.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/ro_data/unzip-me-here.zip" afterPath="$PROJECT_DIR$/ro_data/unzip-me-here.zip" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/maltparser-1.9.0 - sspr.iml" afterPath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/maltparser-1.9.0 - sspr.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="maltparser-1.9.0 - sspr.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -63,8 +27,8 @@
       <file leaf-file-name="AddFeatureColumns.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/InputEnrichFeatureAdapter/src/AddFeatureColumns.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="846">
-              <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
+            <state relative-caret-position="180">
+              <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -77,7 +41,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="4050">
               <caret line="275" column="30" selection-start-line="275" selection-start-column="30" selection-end-line="275" selection-end-column="30" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -153,10 +119,9 @@
     <treeState />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="677" />
-    <option name="y" value="-1057" />
-    <option name="width" value="1920" />
-    <option name="height" value="1057" />
+    <option name="y" value="23" />
+    <option name="width" value="1680" />
+    <option name="height" value="977" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -205,6 +170,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -300,7 +266,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -659,16 +624,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="677" y="-1057" width="1920" height="1057" extended-state="6" />
+    <frame x="0" y="23" width="1680" height="977" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32591093" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27327934" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27327934" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2764317" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -684,7 +650,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Code Iris" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.79957354" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32591093" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3275488" sideWeight="0.4978678" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -836,21 +801,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/InputEnrichFeatureAdapter/src/AddFeatureColumns.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="846">
-          <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ExtractDerivations/src/ExtractRoEventDerivations.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4050">
           <caret line="275" column="30" selection-start-line="275" selection-start-column="30" selection-end-line="275" selection-end-column="30" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -859,6 +816,16 @@
         <state relative-caret-position="255">
           <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/InputEnrichFeatureAdapter/src/AddFeatureColumns.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
