@@ -4,3 +4,4 @@
 /ro_data/batches/*.train
 /out
 /ro_data/maltmodel
+*.class
