@@ -13,7 +13,7 @@ import java.util.Map;
  * Train, Eval and show
  */
 public class TrainEvalShow {
-    public static void main (String[] args) throws IOException, MaltChainedException {
+    public static void main (String[] args) throws Exception {
         AddFeatureColumns.addFeatures(new File(args[0]), new File("train_corpus_++.txt"));
         AddFeatureColumns.addFeatures(new File(args[1]), new File("test_corpus_++.txt"));
         MaltParserService service = new MaltParserService(0);

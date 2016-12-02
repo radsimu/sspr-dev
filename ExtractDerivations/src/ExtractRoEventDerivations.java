@@ -106,15 +106,15 @@ public class ExtractRoEventDerivations {
         dictionary = new MorphologicDictionary();
         dictionary.diacriticsPolicy = MorphologicDictionary.StrippedDiacriticsPolicy.NeverStripped;
         dictionary.load(new FileInputStream("posDictRoDiacr.txt"));
-        for (Map.Entry<String, List<Annotation>> entry : dictionary.entrySet()) {
+        for (Map.Entry<String, Set<Annotation>> entry : dictionary.entrySet()) {
             for (Annotation a : entry.getValue()) {
                 if (outSet.containsKey(a.getLemma()))
                     continue;
-                if ((a.msd.startsWith("Nc") || a.msd.startsWith("Af")) && WordStruct.getCanonicalWord(a.word).equals(WordStruct.getCanonicalWord(a.lemma))) {
+                if ((a.getMsd().startsWith("Nc") || a.getMsd().startsWith("Af")) && WordStruct.getCanonicalWord(a.getWord()).equals(WordStruct.getCanonicalWord(a.getLemma()))) {
                     String lemma = a.getLemma();
                     String verb = getEventDerivationVerbForNoun(lemma);
                     if (verb != null)
-                        outSet.put(lemma, String.format("%s\t%s\t%s\tVmn\tEVENT", WordStruct.getCorrectedDiacritics(a.lemma), a.msd.substring(0,2), WordStruct.getCorrectedDiacritics(verb)));
+                        outSet.put(lemma, String.format("%s\t%s\t%s\tVmn\tEVENT", WordStruct.getCorrectedDiacritics(a.getLemma()), a.getMsd().substring(0,2), WordStruct.getCorrectedDiacritics(verb)));
                 }
             }
         }
@@ -291,10 +291,10 @@ public class ExtractRoEventDerivations {
     }
 
     static String isVerb(String word, String ifHasPos) {
-        List<Annotation> annotations = dictionary.get(word);
+        Set<Annotation> annotations = dictionary.get(word);
         if (annotations != null)
             for (Annotation a : annotations) {
-                if (a.msd.startsWith(ifHasPos)) {
+                if (a.getMsd().startsWith(ifHasPos)) {
                     return a.getLemma();
                 }
             }

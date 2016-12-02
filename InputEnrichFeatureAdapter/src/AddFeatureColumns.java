@@ -11,15 +11,15 @@ import uaic.segmenter.WordStruct;
 public class AddFeatureColumns {
     static MorphologicDictionary dictionary;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         addFeatures(new File(args[0]), new File(args[1]));
     }
 
-    public static void addFeatures(File conllIn, File conllOut) throws IOException {
+    public static void addFeatures(File conllIn, File conllOut) throws Exception {
         if (dictionary == null) {
             dictionary = new MorphologicDictionary();
             dictionary.diacriticsPolicy = MorphologicDictionary.StrippedDiacriticsPolicy.NeverStripped;
-            dictionary.load(new FileInputStream("posDictRoDiacr.txt"));
+            dictionary.load(new FileInputStream("uaicPosTaggerResources/posDictRoDiacr.txt"));
         }
 
         BufferedReader reader = new BufferedReader(new FileReader("ro_derivations_compiled.txt"));
@@ -88,17 +88,17 @@ public class AddFeatureColumns {
     }
 
     private static String verbalFeatsForVerb(String lemma, String pos) {
-        List<Annotation> annotations = dictionary.get(lemma);
+        Set<Annotation> annotations = dictionary.get(lemma);
         if (annotations == null)
             return null;
         for (Annotation annotation : annotations) {
-            if (annotation.msd.startsWith(pos)) {
-                if (annotation.getExtraFeature() == null)
+            if (annotation.getMsd().startsWith(pos)) {
+                if (annotation.getExtra() == null)
                     continue;
                 String transitive = "NA";
-                if (annotation.getExtraFeature().contains("intranzitiv"))
+                if (annotation.getExtra().contains("intranzitiv"))
                     transitive = "false";
-                else if (annotation.getExtraFeature().contains("tranzitiv"))
+                else if (annotation.getExtra().contains("tranzitiv"))
                     transitive = "true";
                 return String.format("is_verbal=true|transitive=" + transitive);
             }
