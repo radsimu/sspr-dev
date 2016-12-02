@@ -1,7 +1,12 @@
-/ro_data/*.txt
-/ro_data/*.mco
-/ro_data/batches/*.test
-/ro_data/batches/*.train
+/ro_data/**/*.txt
 /out
 /ro_data/maltmodel
+*.mco
+*.test
+*.train
 *.class
+*.model
+*.ggf
+*.test++
+*.train++
+*.parsed

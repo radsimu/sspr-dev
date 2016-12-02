@@ -20,8 +20,6 @@ public class RetagWithUaic {
         dic.load(new FileInputStream("uaicPosTaggerResources/posDictRoDiacr.txt"));
         HybridPOStagger tagger = new HybridPOStagger(new FileInputStream("uaicPosTaggerResources/posRoDiacr.model"), dic, new FileInputStream("uaicPosTaggerResources/guesserTagset.txt"), new FileInputStream("uaicPosTaggerResources/posreduction.ggf"));
 
-
-        //compute coverage of the overlap index of the hypernims of all synsets that occur in identical contexts
         List<String[]> sentLines = new ArrayList<>();
         int k =0;
         while ((line = reader.readLine()) != null) {
@@ -36,12 +34,13 @@ public class RetagWithUaic {
                     for (int i = 0; i < words.size(); i++) {
                         String pos = tags.get(i);
                         if (pos.length() > 5)
-                            pos = pos.substring(5);
+                            pos = pos.substring(0,5);
                         sentLines.get(i)[3] = pos;
                         for (String col : sentLines.get(i)) {
                             out.write(col);
-                            out.write("\n");
+                            out.write("\t");
                         }
+                        out.write("\n");
                     }
                     System.out.println("Finished sent " + k);
                     k++;
@@ -52,5 +51,6 @@ public class RetagWithUaic {
             }else
                 sentLines.add(columns);
         }
+        out.close();
     }
 }
