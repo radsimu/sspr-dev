@@ -7,8 +7,11 @@ source add_train_eval_batch.sh batches/ro-ud-racai-uaic-9522-ttl-3.conllx.train 
 source add_train_eval_batch.sh batches/ro-ud-racai-uaic-9522-ttl-4.conllx.train batches/ro-ud-racai-uaic-9522-ttl-4.conllx.test 4.model >> cross_eval_report.txt &
 source add_train_eval_batch.sh batches/ro-ud-racai-uaic-9522-ttl-5.conllx.train batches/ro-ud-racai-uaic-9522-ttl-5.conllx.test 5.model >> cross_eval_report.txt)
 wait $!
+rm *.mco
 (source add_train_eval_batch.sh batches/ro-ud-racai-uaic-9522-ttl-6.conllx.train batches/ro-ud-racai-uaic-9522-ttl-6.conllx.test 6.model >> cross_eval_report.txt &
 source add_train_eval_batch.sh batches/ro-ud-racai-uaic-9522-ttl-7.conllx.train batches/ro-ud-racai-uaic-9522-ttl-7.conllx.test 7.model >> cross_eval_report.txt &
 source add_train_eval_batch.sh batches/ro-ud-racai-uaic-9522-ttl-8.conllx.train batches/ro-ud-racai-uaic-9522-ttl-8.conllx.test 8.model >> cross_eval_report.txt &
 source add_train_eval_batch.sh batches/ro-ud-racai-uaic-9522-ttl-9.conllx.train batches/ro-ud-racai-uaic-9522-ttl-9.conllx.test 9.model >> cross_eval_report.txt &
 source add_train_eval_batch.sh batches/ro-ud-racai-uaic-9522-ttl-10.conllx.train batches/ro-ud-racai-uaic-9522-ttl-10.conllx.test 10.model >> cross_eval_report.txt)
+wait $!
+rm *.mco

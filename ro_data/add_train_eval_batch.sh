@@ -17,5 +17,5 @@ java -Xms1000m -Dfile.encoding=utf-8 org.maltparser.Malt -c $3 -f train_options.
 echo Evaluating batch ...
 java -Xms1000m -Dfile.encoding=utf-8 org.maltparser.Malt -c $3 -f train_options.xml -i $test++ -o $test++.parsed -m parse -ic UTF-8 
 ret=$(java -Dfile.encoding=utf-8 maltProcessing.EvaluateMaltModel $test++ $test++.parsed)
-#rm -rf $test++ $test++.parsed $train++ $3.mco
+rm -rf $test++ $test++.parsed $train++
 echo $test $ret

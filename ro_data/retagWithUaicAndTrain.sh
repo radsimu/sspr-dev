@@ -18,3 +18,5 @@ if [ ! -f batches_taggedWithUaic/ro-ud-racai-uaic-9522-uaic-10.conllx.train ]; t
 fi
 
 source add_train_eval_batch.sh batches_taggedWithUaic/ro-ud-racai-uaic-9522-uaic-10.conllx.train batches_taggedWithUaic/ro-ud-racai-uaic-9522-uaic-10.conllx.test batches_taggedWithUaic_10.uaic.model
+
+mv -f batches_taggedWithUaic_10.uaic.model.mco batches_taggedWithUaic/batches_taggedWithUaic_10.uaic.model.mco
