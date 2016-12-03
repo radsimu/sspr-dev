@@ -6,7 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/Dashboard/Dashboard.iml" filepath="$PROJECT_DIR$/Dashboard/Dashboard.iml" />
       <module fileurl="file://$PROJECT_DIR$/ExtractDerivations/ExtractDerivations.iml" filepath="$PROJECT_DIR$/ExtractDerivations/ExtractDerivations.iml" />
       <module fileurl="file://$PROJECT_DIR$/SemanticAttraction/SemanticAttraction.iml" filepath="$PROJECT_DIR$/SemanticAttraction/SemanticAttraction.iml" />
-      <module fileurl="file://$PROJECT_DIR$/maltparser-1.9.0 - sspr/maltparser-1.9.0 - sspr.iml" filepath="$PROJECT_DIR$/maltparser-1.9.0 - sspr/maltparser-1.9.0 - sspr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/maltparser-1.9.0-SSPR/maltparser-1.9.0-SSPR.iml" filepath="$PROJECT_DIR$/maltparser-1.9.0-SSPR/maltparser-1.9.0-SSPR.iml" />
     </modules>
   </component>
 </project>

@@ -14,7 +14,7 @@ public class ExtractRoEventDerivations {
     public static void main(String[] args) throws Exception {
         BufferedReader wnAligned = new BufferedReader(new FileReader("partial_ro_derivations/ro_derivations_pwn_aligned.txt"));
         String line;
-        Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("ro_derivations_compiled.txt")));
+        Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("ro_derivations_compiled.txt"), "UTF-8"));
         Map<String, String> outSet = new TreeMap<String, String>();
 
         //these have been automatically correlated from alignment with the english wordnet derivations and should all be correct (ack Elenea)

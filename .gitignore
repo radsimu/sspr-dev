@@ -1,12 +1,14 @@
 /ro_data/**/*.txt
 /out
 /ro_data/maltmodel
+/ro_data/corola/*/*
 *.mco
 *.test
 *.train
 *.class
 *.model
 *.ggf
-*.test++
-*.train++
+*.test
+*.train
+*++
 *.parsed

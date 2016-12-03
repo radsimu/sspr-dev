@@ -15,7 +15,7 @@ public class RetagWithUaic {
     public static void main(String[] args) throws Exception {
         BufferedReader reader = new BufferedReader(new FileReader(args[0]));
         String line;
-        Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[1])));
+        Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[1]), "UTF-8"));
         MorphologicDictionary dic = new MorphologicDictionary();
         dic.load(new FileInputStream("uaicPosTaggerResources/posDictRoDiacr.txt"));
         HybridPOStagger tagger = new HybridPOStagger(new FileInputStream("uaicPosTaggerResources/posRoDiacr.model"), dic, new FileInputStream("uaicPosTaggerResources/guesserTagset.txt"), new FileInputStream("uaicPosTaggerResources/posreduction.ggf"));

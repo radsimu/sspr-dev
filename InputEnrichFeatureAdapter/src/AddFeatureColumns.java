@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.*;
 
 import uaic.postagger.tagger.Annotation;
+import uaic.postagger.tagger.HybridPOStagger;
 import uaic.postagger.tagger.MorphologicDictionary;
 import uaic.segmenter.WordStruct;
 
@@ -9,18 +10,29 @@ import uaic.segmenter.WordStruct;
  * Created by Planetaria on 10/25/2016.
  */
 public class AddFeatureColumns {
-    static MorphologicDictionary dictionary;
+    static HybridPOStagger _tagger;
+    static MorphologicDictionary _dic;
+
+    static MorphologicDictionary getDic() throws Exception {
+        if (_dic == null){
+            _dic = new MorphologicDictionary();
+            _dic.load(new FileInputStream("uaicPosTaggerResources/posDictRoDiacr.txt"));
+        }
+        return _dic;
+    }
+
+    static HybridPOStagger getTagger() throws Exception {
+        if (_tagger == null)
+            _tagger = new HybridPOStagger(new FileInputStream("uaicPosTaggerResources/posRoDiacr.model"), getDic(), new FileInputStream("uaicPosTaggerResources/guesserTagset.txt"), new FileInputStream("uaicPosTaggerResources/posreduction.ggf"));
+        return _tagger;
+    }
 
     public static void main(String[] args) throws Exception {
         addFeatures(new File(args[0]), new File(args[1]));
     }
 
     public static void addFeatures(File conllIn, File conllOut) throws Exception {
-        if (dictionary == null) {
-            dictionary = new MorphologicDictionary();
-            dictionary.diacriticsPolicy = MorphologicDictionary.StrippedDiacriticsPolicy.NeverStripped;
-            dictionary.load(new FileInputStream("uaicPosTaggerResources/posDictRoDiacr.txt"));
-        }
+
 
         BufferedReader reader = new BufferedReader(new FileReader("ro_derivations_compiled.txt"));
         Map<String, String> eventNouns = new HashMap<String, String>();
@@ -87,8 +99,8 @@ public class AddFeatureColumns {
         out.close();
     }
 
-    private static String verbalFeatsForVerb(String lemma, String pos) {
-        Set<Annotation> annotations = dictionary.get(lemma);
+    private static String verbalFeatsForVerb(String lemma, String pos) throws Exception {
+        Set<Annotation> annotations = getDic().get(lemma);
         if (annotations == null)
             return null;
         for (Annotation annotation : annotations) {

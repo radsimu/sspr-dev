@@ -5,7 +5,9 @@ if [[ $(uname -a) == *"MINGW"* ]]; then
 SEPARATOR=";" 
 fi
 
-export CLASSPATH="../out/production/SemanticAttraction/"$SEPARATOR"../lib/*"
+export CLASSPATH="../out/production/Dashboard/"$SEPARATOR"../lib/*"
+
+mkdir -p batches_taggedWithUaic
 
 if [ ! -f batches_taggedWithUaic/ro-ud-racai-uaic-9522-uaic-10.conllx.test ]; then
 	echo Retagging batches/ro-ud-racai-uaic-9522-ttl-10.conllx.test
@@ -17,6 +19,6 @@ if [ ! -f batches_taggedWithUaic/ro-ud-racai-uaic-9522-uaic-10.conllx.train ]; t
     java -Xms4g -Dfile.encoding=utf-8 RetagWithUaic batches/ro-ud-racai-uaic-9522-ttl-10.conllx.train batches_taggedWithUaic/ro-ud-racai-uaic-9522-uaic-10.conllx.train 
 fi
 
-source add_train_eval_batch.sh batches_taggedWithUaic/ro-ud-racai-uaic-9522-uaic-10.conllx.train batches_taggedWithUaic/ro-ud-racai-uaic-9522-uaic-10.conllx.test batches_taggedWithUaic_10.uaic.model
+source scripts/add_train_eval_batch.sh batches_taggedWithUaic/ro-ud-racai-uaic-9522-uaic-10.conllx.train batches_taggedWithUaic/ro-ud-racai-uaic-9522-uaic-10.conllx.test batches_taggedWithUaic_10.uaic.model
 
-mv -f batches_taggedWithUaic_10.uaic.model.mco batches_taggedWithUaic/batches_taggedWithUaic_10.uaic.model.mco
+cp -f batches_taggedWithUaic_10.uaic.model.mco batches_taggedWithUaic/batches_taggedWithUaic_10.uaic.model.mco

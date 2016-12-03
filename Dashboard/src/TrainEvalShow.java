@@ -1,11 +1,8 @@
 import maltProcessing.EvaluateMaltModel;
-import org.maltparser.Malt;
 import org.maltparser.MaltParserService;
-import org.maltparser.core.exception.MaltChainedException;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Map;
 
 /**
