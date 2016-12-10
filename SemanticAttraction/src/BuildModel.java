@@ -29,12 +29,16 @@ public class BuildModel {
 
         public void computeMetrics(SynsetContext starContext) {
             maxQualityAttractionScore = 0;
-
+            if (occurringLemmas.size() < 10)
+                return;
             for (Map.Entry<String, Integer> entry : qualitiesOccurrenceCount.entrySet()) {
                 qualitiesOccurrenceProbabilities.put(entry.getKey(), (float) entry.getValue() / occurringSynsets.size());
 
                 if (starContext != null) {
                     float qualityAttractionScore = (float) (1 + Math.log(entry.getValue())) * (float)Math.log(1 + 1/starContext.qualitiesOccurrenceProbabilities.get(entry.getKey()));
+                    if (entry.getValue() < 5){
+                        continue;
+                    }
                     if (maxQualityAttractionScore < qualityAttractionScore)
                         maxQualityAttractionScore = qualityAttractionScore;
 
@@ -94,63 +98,59 @@ public class BuildModel {
                             preps = "_";
                         else
                             preps = sb.toString().substring(0, sb.length() - 1);
-                        context = ((sentHeads.get(i) != 0) ? (sentLemmas.get(sentHeads.get(i) - 1) + "(" + sentPos.get(sentHeads.get(i) - 1).substring(0, 1) + ")") : "ROOT") + " -> [" + preps + " -> " + sentPos.get(i).substring(0, 1) + "]";
+                        context = ((sentHeads.get(i) != 0) ? sentLemmas.get(sentHeads.get(i) - 1) : "ROOT") + " -> [" + preps + " -> " + sentPos.get(i).substring(0, 1) + "]";
                         //else
                         //    context = "ROOT";
 
 
                         //ensure that each  lemma is considered only once for each context. We don't count for the frequency of a lemma being correlated with a particular context. We just need 1 proof that a lemma is correlated with a context
-                        try {
-                            SynsetContext synsetContext = contexts.get(context);
-                            if (synsetContext == null) {
-                                synsetContext = new SynsetContext(context);
-                                contexts.put(context, synsetContext);
-                            }
+                        SynsetContext synsetContext = contexts.get(context);
+                        if (synsetContext == null) {
+                            synsetContext = new SynsetContext(context);
+                            contexts.put(context, synsetContext);
+                        }
 
-                            if (synsetContext.occurringLemmas.contains(sentLemmas.get(i)))
-                                continue;
-                            synsetContext.occurringLemmas.add(sentLemmas.get(i));
+                        if (synsetContext.occurringLemmas.contains(sentLemmas.get(i)))
+                            continue;
+                        synsetContext.occurringLemmas.add(sentLemmas.get(i));
 
-                            Set<RoWordNet.Synset> synsets = rown.getSynsetsForLiterral(sentLemmas.get(i).split(" - ")[0]);
-                            if (synsets == null)
-                                continue;
+                        Set<RoWordNet.Synset> synsets = rown.getSynsetsForLiterral(sentLemmas.get(i).split(" \\(")[0]);
+                        if (synsets == null)
+                            continue;
 
-                            //remove synsets associated with the found lemma, that have different pos from the one of the occuring lemma
-                            Iterator<RoWordNet.Synset> iter = synsets.iterator();
-                            while (iter.hasNext()) {
-                                RoWordNet.Synset synset = iter.next();
-                                if (Character.toLowerCase(synset.pos.charAt(0)) != Character.toLowerCase(sentPos.get(i).charAt(0)))
-                                    iter.remove();
-                            }
-                            if (synsets.isEmpty())
-                                continue;
+                        //remove synsets associated with the found lemma, that have different pos from the one of the occuring lemma
+                        Iterator<RoWordNet.Synset> iter = synsets.iterator();
+                        while (iter.hasNext()) {
+                            RoWordNet.Synset synset = iter.next();
+                            if (Character.toLowerCase(synset.pos.charAt(0)) != Character.toLowerCase(sentPos.get(i).charAt(0)))
+                                iter.remove();
+                        }
+                        if (synsets.isEmpty())
+                            continue;
 
-                            synsetContext.occurringSynsets.addAll(synsets);
+                        synsetContext.occurringSynsets.addAll(synsets);
 
-                            Set<RoWordNet.Synset> synsetsHypernims = getHypernims(synsets);
+                        Set<RoWordNet.Synset> synsetsHypernims = getHypernims(synsets);
 
-                            //add the hypernym tree as qualities of the occuring synsets
+                        //add the hypernym tree as qualities of the occuring synsets
+                        for (RoWordNet.Synset synset : synsetsHypernims) {
+                            Integer f = synsetContext.qualitiesOccurrenceCount.get(synset.toString());
+                            if (f == null)
+                                f = 0;
+                            f += 1;
+                            synsetContext.qualitiesOccurrenceCount.put(synset.toString(), f);
+                        }
+
+                        if (!starContext.occurringLemmas.contains(sentLemmas.get(i))) {
+                            starContext.occurringLemmas.add(sentLemmas.get(i));
+                            starContext.occurringSynsets.addAll(synsetsHypernims);
                             for (RoWordNet.Synset synset : synsetsHypernims) {
-                                Integer f = synsetContext.qualitiesOccurrenceCount.get(synset.toString());
+                                Integer f = starContext.qualitiesOccurrenceCount.get(synset.toString());
                                 if (f == null)
                                     f = 0;
                                 f += 1;
-                                synsetContext.qualitiesOccurrenceCount.put(synset.toString(), f);
+                                starContext.qualitiesOccurrenceCount.put(synset.toString(), f);
                             }
-
-                            if (!starContext.occurringLemmas.contains(sentLemmas.get(i))) {
-                                starContext.occurringLemmas.add(sentLemmas.get(i));
-                                starContext.occurringSynsets.addAll(synsetsHypernims);
-                                for (RoWordNet.Synset synset : synsetsHypernims) {
-                                    Integer f = starContext.qualitiesOccurrenceCount.get(synset.toString());
-                                    if (f == null)
-                                        f = 0;
-                                    f += 1;
-                                    starContext.qualitiesOccurrenceCount.put(synset.toString(), f);
-                                }
-                            }
-                        }catch (Exception ex){
-                             ex =ex;
                         }
                     }
                 }
@@ -162,7 +162,7 @@ public class BuildModel {
                 continue;
             }
             sentWords.add(columns[1]);
-            sentLemmas.add(columns[2] + " - " + columns[4].substring(0, 1)); //also adding the first letter of the pos, to separate identical lemmas having different pos type
+            sentLemmas.add(columns[2] + " (" + columns[4].substring(0, 1) + ")"); //also adding the first letter of the pos, to separate identical lemmas having different pos type
             sentPos.add(columns[4]);
             sentHeads.add(Integer.parseInt(columns[6]));
         }
