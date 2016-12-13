@@ -22,32 +22,88 @@ public class BuildModel {
         public Set<RoWordNet.Synset> occurringSynsets = new HashSet<>();
         public Map<String, Integer> qualitiesOccurrenceCount = new HashMap<>(); //the number of synsets that have each quality
         public Map<String, Float> qualitiesOccurrenceProbabilities = new HashMap<>(); //the probability of a synset to have each quality
+
         public Map<String, Float> qualityAttractionScores = new HashMap<>();
         public List<Map.Entry<String, Float>> qualityAttractionScoresOrdered = new ArrayList<>();
-
         public float maxQualityAttractionScore;
+
+        public Map<String, Float> qualityGeneralizationIndexes = new HashMap<>(); //how much does a quality represent a generalisation of the occuring synsets
+        public List<Map.Entry<String, Float>> qualityGeneralizationIndexOrdered = new ArrayList<>();
+        public float maxQualityGeneralizationIndex;
+
 
         public void computeMetrics(SynsetContext starContext) {
             maxQualityAttractionScore = 0;
             if (occurringLemmas.size() < 10)
                 return;
             for (Map.Entry<String, Integer> entry : qualitiesOccurrenceCount.entrySet()) {
-                qualitiesOccurrenceProbabilities.put(entry.getKey(), (float) entry.getValue() / occurringSynsets.size());
+                qualitiesOccurrenceProbabilities.put(entry.getKey(), (float) entry.getValue() / occurringLemmas.size());
+            }
 
-                if (starContext != null) {
-                    float qualityAttractionScore = (float) (1 + Math.log(entry.getValue())) * (float)Math.log(1 + 1/starContext.qualitiesOccurrenceProbabilities.get(entry.getKey()));
-                    if (entry.getValue() < 5){
-                        continue;
-                    }
+            if (starContext != null) {
+                //tf-idf attraction score
+                for (Map.Entry<String, Integer> entry : qualitiesOccurrenceCount.entrySet()) {
+                    float qualityAttractionScore = (float) Math.log(1 + qualitiesOccurrenceProbabilities.get(entry.getKey())) * (float)Math.log(1/starContext.qualitiesOccurrenceProbabilities.get(entry.getKey()));
                     if (maxQualityAttractionScore < qualityAttractionScore)
                         maxQualityAttractionScore = qualityAttractionScore;
 
                     qualityAttractionScores.put(entry.getKey(), qualityAttractionScore);
                     qualityAttractionScoresOrdered.add(new AbstractMap.SimpleEntry<>(entry.getKey(), qualityAttractionScore));
                 }
+                qualityAttractionScoresOrdered.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+
+                //generalization index
+                maxQualityGeneralizationIndex = 0;
+                HashMap<RoWordNet.Synset, RoWordNet.Synset> maxAttractionHypernimPerSynset = buildMapWithHypernmWithMaxAttractionScoreForEachSynset();
+                for (RoWordNet.Synset synset : occurringSynsets) {
+                    if (!qualityAttractionScores.containsKey(synset.toString()))
+                        continue;
+                    float qualityGeneralizationIndex = qualityAttractionScores.get(maxAttractionHypernimPerSynset.get(synset).toString()) - qualityAttractionScores.get(synset.toString());
+
+                    if (maxQualityGeneralizationIndex < qualityGeneralizationIndex)
+                        maxQualityGeneralizationIndex = qualityGeneralizationIndex;
+
+                    qualityGeneralizationIndexes.put(synset.toString() + " ---> " + maxAttractionHypernimPerSynset.get(synset), qualityGeneralizationIndex);
+                    qualityGeneralizationIndexOrdered.add(new AbstractMap.SimpleEntry<>(synset.toString() + " ---> " + maxAttractionHypernimPerSynset.get(synset), qualityGeneralizationIndex));
+                }
+                qualityGeneralizationIndexOrdered.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+            }
+        }
+
+        private HashMap<RoWordNet.Synset, RoWordNet.Synset> buildMapWithHypernmWithMaxAttractionScoreForEachSynset() {
+            HashMap<RoWordNet.Synset, RoWordNet.Synset> rez = new HashMap<>();
+            //mark all the synsets in the hypernym ascendence chain for the synsets of this lemma occurence
+            for (RoWordNet.Synset synset : occurringSynsets) {
+                buildMaxAttractionHypernimForSynsetRecursive(synset, rez);
+            }
+            return rez;
+        }
+
+        private RoWordNet.Synset buildMaxAttractionHypernimForSynsetRecursive(RoWordNet.Synset synset, HashMap<RoWordNet.Synset, RoWordNet.Synset> partialMapWithHypernimsMaxAttractionScores) {
+            if (qualityAttractionScores.get(synset.toString()) == null)
+                return null;
+            if (partialMapWithHypernimsMaxAttractionScores.containsKey(synset))
+                return partialMapWithHypernimsMaxAttractionScores.get(synset);
+
+            Set<RoWordNet.Synset> hypernims = synset.relations.get(RoWordNet.WNRelation.hypernym);
+            Float max = qualityAttractionScores.get(synset.toString());
+            RoWordNet.Synset maxHypernim = synset;
+
+            partialMapWithHypernimsMaxAttractionScores.put(synset, null);//this avoids infinite loop... it seems that hypernims can create loops (maybe an wn error?)
+            if (hypernims != null) {
+                for (RoWordNet.Synset hypernim : hypernims){
+                    RoWordNet.Synset s = buildMaxAttractionHypernimForSynsetRecursive(hypernim, partialMapWithHypernimsMaxAttractionScores);
+                    if (s == null)
+                        continue;
+                    if (qualityAttractionScores.get(s.toString()) > max) {
+                        max = qualityAttractionScores.get(s.toString());
+                        maxHypernim = s;
+                    }
+                }
             }
 
-            qualityAttractionScoresOrdered.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+            partialMapWithHypernimsMaxAttractionScores.put(synset, maxHypernim);
+            return maxHypernim;
         }
 
         @Override
@@ -81,6 +137,8 @@ public class BuildModel {
                     for (int i = 0; i < sentWords.size(); i++) {
                         //build a context - in this case the lemma and pos of the head of the word + pos of word
                         //TODO: remove the constraint below for more generic context analysis
+                        if (!sentPos.get(i).startsWith("Nc"))
+                            continue;
 //                        if (sentHeads.get(i) == 0 || !sentPos.get(sentHeads.get(i) - 1).startsWith("Vm") || !sentPos.get(i).startsWith("Nc"))//se ne uitam un pic doar la cazul verb->substantiv regent
 //                            continue;
                         String context = null;
@@ -171,16 +229,17 @@ public class BuildModel {
 
         //extract contexts for which a high overlap index has been observed
         List<Map.Entry<Float, SynsetContext>> contextsByMaxAttractionScore = new ArrayList<>();
+        List<Map.Entry<Float, SynsetContext>> contextsByMaxGeneralizationIndex = new ArrayList<>();
 
         for (SynsetContext synsetContext : contexts.values()) {
             synsetContext.computeMetrics(starContext);
             contextsByMaxAttractionScore.add(new AbstractMap.SimpleEntry<>((float) synsetContext.maxQualityAttractionScore, synsetContext));
+            contextsByMaxGeneralizationIndex.add(new AbstractMap.SimpleEntry<>(synsetContext.maxQualityGeneralizationIndex, synsetContext));
         }
-
 
         Comparator<Map.Entry<Float, SynsetContext>> comparator = (o1, o2) -> Float.compare(o2.getKey(), o1.getKey());
         contextsByMaxAttractionScore.sort(comparator);
-
+        contextsByMaxGeneralizationIndex.sort(comparator);
 
         reader.close();
     }
