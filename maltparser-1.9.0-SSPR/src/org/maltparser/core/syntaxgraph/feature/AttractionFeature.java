@@ -1,5 +1,6 @@
 package org.maltparser.core.syntaxgraph.feature;
 
+import com.sspr.semantics.SemanticAttractionModel;
 import org.maltparser.core.exception.MaltChainedException;
 import org.maltparser.core.feature.function.AddressFunction;
 import org.maltparser.core.feature.function.FeatureFunction;
@@ -19,6 +20,8 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public final class AttractionFeature implements FeatureMapFunction {
+    public SemanticAttractionModel semanticAttractionModel;
+
     public final static Class<?>[] paramTypes = {org.maltparser.core.feature.function.FeatureFunction.class,
             org.maltparser.core.feature.function.FeatureFunction.class,
             org.maltparser.core.feature.function.FeatureFunction.class,
@@ -36,10 +39,6 @@ public final class AttractionFeature implements FeatureMapFunction {
     private final SymbolTableHandler tableHandler;
     private SymbolTable table;
     private final SingleFeatureValue featureValue;
-
-//	public DistanceFeature(FeatureRegistry registry) throws MaltChainedException {
-//		this(registry.getSymbolTableHandler());
-//	}
 
     public AttractionFeature(SymbolTableHandler tableHandler) throws MaltChainedException {
         this.featureValue = new SingleFeatureValue(this);

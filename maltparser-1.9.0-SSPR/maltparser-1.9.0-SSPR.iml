@@ -35,5 +35,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="SemanticAttraction" />
   </component>
 </module>

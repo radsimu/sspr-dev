@@ -21,6 +21,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import com.sspr.semantics.SemanticAttractionModel;
 import org.maltparser.core.exception.MaltChainedException;
 import org.maltparser.core.options.option.EnumOption;
 import org.maltparser.core.options.option.ClassOption;
@@ -42,6 +43,7 @@ import org.xml.sax.SAXException;
 **/
 public class OptionManager {
 	public static final int DEFAULTVALUE = -1;
+	public static SemanticAttractionModel semanticAttractionModel;
 	private final OptionDescriptions optionDescriptions;
 	private final OptionValues optionValues;
 	private static OptionManager uniqueInstance = new OptionManager();

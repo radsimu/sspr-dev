@@ -1,3 +1,4 @@
+package com.sspr.semantics;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -78,6 +79,20 @@ public class RoWordNet {
         @Override
         public String toString() {
             return literals.keySet().toString() + " -> (domain:" + domain + ") + (SUMO:" + sumo + ")";
+        }
+
+        @Override
+        public int hashCode(){
+            return toString().hashCode();
+        }
+
+        @Override
+        public boolean equals(Object synset){
+            if (this == synset)
+                return true;
+            if (synset instanceof Synset)
+                return toString().equals(synset.toString());
+            return super.equals(synset);
         }
     }
 

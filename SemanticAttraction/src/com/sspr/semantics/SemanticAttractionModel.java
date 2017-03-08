@@ -1,5 +1,6 @@
-import org.xml.sax.SAXException;
+package com.sspr.semantics;
 
+import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.util.*;
@@ -9,7 +10,24 @@ import java.util.*;
  */
 
 
-public class BuildModel {
+public class SemanticAttractionModel {
+    public RoWordNet roWordNet;
+    public ContextBuilder contextBuilder;
+    public SynsetContext starContext = new SynsetContext("*");
+    public Map<String, SynsetContext> contexts = new TreeMap<>();
+    public List<Map.Entry<Float, SynsetContext>> contextsByMaxAttractionScore = new ArrayList<>();
+    public List<Map.Entry<Float, SynsetContext>> contextsByMaxGeneralizationIndex = new ArrayList<>();
+    public Map<String, Map<String, Float>> synsetsToAttractiveContexts = new HashMap<>(); // each synset(as string) is attracted to a set of different contexts, with different scores for each
+
+    public SemanticAttractionModel (RoWordNet roWordNet, InputStream conllCorpus, ContextBuilder contextBuilder) throws ParserConfigurationException, SAXException, IOException {
+        this.roWordNet = roWordNet;
+        this.contextBuilder = contextBuilder;
+        build(conllCorpus);
+    }
+
+    public static abstract class ContextBuilder{
+        public abstract String buildContext(int tokenToBuildContextFor, List<String> sentLemmas, List<String> sentPos, List<Integer> sentHeads);
+    }
 
     public static class SynsetContext {
 
@@ -108,26 +126,64 @@ public class BuildModel {
 
         @Override
         public String toString() {
-            return identifier;
+            StringBuilder sb = new StringBuilder(identifier);
+            if (qualityAttractionScoresOrdered.size() > 0) {
+                sb.append("  ::  ");
+                sb.append("(bestAttr=").append(qualityAttractionScoresOrdered.get(0).getValue()).append(" ").append(qualityAttractionScoresOrdered.get(0).getKey()).append(")");
+            }
+
+            if (qualityGeneralizationIndexOrdered.size() > 0) {
+                sb.append("  ::  ");
+                sb.append("(bestGen=").append(qualityGeneralizationIndexOrdered.get(0).getValue()).append(" ").append(qualityGeneralizationIndexOrdered.get(0).getKey()).append(")");
+            }
+
+            return sb.toString();
         }
     }
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
+        //for demo purposes:
         RoWordNet rown = new RoWordNet();
         rown.load(args[0]);
+        SemanticAttractionModel semanticAttractionModel = new SemanticAttractionModel (rown, new FileInputStream(args[1]), new ContextBuilder() {
+            @Override
+            public String buildContext(int tokenToBuildContextFor, List<String> sentLemmas, List<String> sentPos, List<Integer> sentHeads) {
+                //TODO: remove the constraint below for more generic context analysis
+                //if (!sentPos.get(i).startsWith("Nc"))
+                //continue;
+//                        if (sentHeads.get(i) == 0 || !sentPos.get(sentHeads.get(i) - 1).startsWith("Vm") || !sentPos.get(i).startsWith("Nc"))//se ne uitam un pic doar la cazul verb->substantiv regent
+//                            continue;
 
+                //compute the prepositions attached to word i
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < sentLemmas.size(); j++) {
+                    if (sentHeads.get(j) - 1 == tokenToBuildContextFor && (sentPos.get(j).startsWith("S") || sentPos.get(j).startsWith("Q") || sentPos.get(j).startsWith("R"))) {//word j has i as head
+                        sb.append(sentLemmas.get(j)).append("_");
+                    }
+                }
+                String preps;
+                if (sb.length() == 0)
+                    preps = "_";
+                else
+                    preps = sb.toString().substring(0, sb.length() - 1);
+                String context = ((sentHeads.get(tokenToBuildContextFor) != 0) ? sentLemmas.get(sentHeads.get(tokenToBuildContextFor) - 1) : "ROOT") + " -> [" + preps + " -> " + sentPos.get(tokenToBuildContextFor).substring(0, 1) + "]";
+                //else
+                //    context = "ROOT";
+                return context;
+            }
+        });
+        semanticAttractionModel = semanticAttractionModel;
+    }
+
+    private void build(InputStream conllCorpus) throws IOException, SAXException, ParserConfigurationException {
         //count lemma by synset
 
-        BufferedReader reader = new BufferedReader(new FileReader(args[1]));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(conllCorpus));
         String line;
         List<Integer> sentHeads = new ArrayList<>();
         List<String> sentWords = new ArrayList<>();
         List<String> sentLemmas = new ArrayList<>();
         List<String> sentPos = new ArrayList<>();
-
-        SynsetContext starContext = new SynsetContext("*");
-        Map<String, SynsetContext> contexts = new TreeMap<>();
-
 
         //compute coverage of the overlap index of the hypernims of all synsets that occur in identical contexts
         while ((line = reader.readLine()) != null) {
@@ -135,44 +191,19 @@ public class BuildModel {
             if (columns.length < 5) {
                 if (sentWords.size() > 0) {
                     for (int i = 0; i < sentWords.size(); i++) {
-                        //build a context - in this case the lemma and pos of the head of the word + pos of word
-                        //TODO: remove the constraint below for more generic context analysis
-                        if (!sentPos.get(i).startsWith("Nc"))
-                            continue;
-//                        if (sentHeads.get(i) == 0 || !sentPos.get(sentHeads.get(i) - 1).startsWith("Vm") || !sentPos.get(i).startsWith("Nc"))//se ne uitam un pic doar la cazul verb->substantiv regent
-//                            continue;
-                        String context = null;
-
-
-                        //compute the prepositions attached to word i
-                        StringBuilder sb = new StringBuilder();
-                        for (int j = 0; j < sentWords.size(); j++) {
-                            if (sentHeads.get(j) - 1 == i && sentPos.get(j).startsWith("S")) {//word j has i as head
-                                sb.append(sentLemmas.get(j)).append("_");
-                            }
-                        }
-                        String preps;
-                        if (sb.length() == 0)
-                            preps = "_";
-                        else
-                            preps = sb.toString().substring(0, sb.length() - 1);
-                        context = ((sentHeads.get(i) != 0) ? sentLemmas.get(sentHeads.get(i) - 1) : "ROOT") + " -> [" + preps + " -> " + sentPos.get(i).substring(0, 1) + "]";
-                        //else
-                        //    context = "ROOT";
-
+                        String context = contextBuilder.buildContext(i, sentLemmas, sentPos, sentHeads);
 
                         //ensure that each  lemma is considered only once for each context. We don't count for the frequency of a lemma being correlated with a particular context. We just need 1 proof that a lemma is correlated with a context
                         SynsetContext synsetContext = contexts.get(context);
                         if (synsetContext == null) {
                             synsetContext = new SynsetContext(context);
-                            contexts.put(context, synsetContext);
                         }
 
                         if (synsetContext.occurringLemmas.contains(sentLemmas.get(i)))
                             continue;
                         synsetContext.occurringLemmas.add(sentLemmas.get(i));
 
-                        Set<RoWordNet.Synset> synsets = rown.getSynsetsForLiterral(sentLemmas.get(i).split(" \\(")[0]);
+                        Set<RoWordNet.Synset> synsets = roWordNet.getSynsetsForLiterral(sentLemmas.get(i).split(" \\(")[0]);
                         if (synsets == null)
                             continue;
 
@@ -187,6 +218,7 @@ public class BuildModel {
                             continue;
 
                         synsetContext.occurringSynsets.addAll(synsets);
+                        contexts.put(context, synsetContext);
 
                         Set<RoWordNet.Synset> synsetsHypernims = getHypernims(synsets);
 
@@ -228,12 +260,10 @@ public class BuildModel {
         starContext.computeMetrics(null);
 
         //extract contexts for which a high overlap index has been observed
-        List<Map.Entry<Float, SynsetContext>> contextsByMaxAttractionScore = new ArrayList<>();
-        List<Map.Entry<Float, SynsetContext>> contextsByMaxGeneralizationIndex = new ArrayList<>();
 
         for (SynsetContext synsetContext : contexts.values()) {
             synsetContext.computeMetrics(starContext);
-            contextsByMaxAttractionScore.add(new AbstractMap.SimpleEntry<>((float) synsetContext.maxQualityAttractionScore, synsetContext));
+            contextsByMaxAttractionScore.add(new AbstractMap.SimpleEntry<>(synsetContext.maxQualityAttractionScore, synsetContext));
             contextsByMaxGeneralizationIndex.add(new AbstractMap.SimpleEntry<>(synsetContext.maxQualityGeneralizationIndex, synsetContext));
         }
 
@@ -241,6 +271,21 @@ public class BuildModel {
         contextsByMaxAttractionScore.sort(comparator);
         contextsByMaxGeneralizationIndex.sort(comparator);
 
+
+        for (Map.Entry<Float, SynsetContext> floatSynsetContextEntry : contextsByMaxAttractionScore) {
+            if (floatSynsetContextEntry.getKey() == 0)
+                continue;
+            for (Map.Entry<String, Float> entry : floatSynsetContextEntry.getValue().qualityAttractionScores.entrySet()){
+                if (entry.getValue() == 0)
+                    continue;
+                Map<String, Float> attractedToContexts = synsetsToAttractiveContexts.get(entry.getKey());
+                if (attractedToContexts == null){
+                    attractedToContexts = new HashMap<>();
+                    synsetsToAttractiveContexts.put(entry.getKey(), attractedToContexts);
+                }
+                attractedToContexts.put(floatSynsetContextEntry.getValue().identifier, entry.getValue());
+            }
+        }
         reader.close();
     }
 
@@ -281,5 +326,16 @@ public class BuildModel {
             return 0;
         }
         return ComputeSynsetDepth(h.iterator().next(), synsetsToDepths) + 1;
+    }
+
+    public float computeLemmaAttraction(String lemma, String contex){
+        float max = 0;
+        for (RoWordNet.Synset synset : roWordNet.getSynsetsForLiterral(lemma)){
+            Map<String, Float> attractiveContexts = synsetsToAttractiveContexts.get(synset.toString());
+            Float attraction = attractiveContexts.get(contex);
+            if (attraction != null && attraction > max)
+                max = attraction;
+        }
+        return max;
     }
 }

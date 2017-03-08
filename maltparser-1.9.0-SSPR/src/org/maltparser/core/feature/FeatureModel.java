@@ -13,6 +13,8 @@ import org.maltparser.core.feature.spec.SpecificationModel;
 import org.maltparser.core.feature.spec.SpecificationSubModel;
 import org.maltparser.core.feature.system.FeatureEngine;
 import org.maltparser.core.helper.HashMap;
+import org.maltparser.core.options.OptionManager;
+import org.maltparser.core.syntaxgraph.feature.AttractionFeature;
 
 
 /**
@@ -243,6 +245,10 @@ public class FeatureModel extends HashMap<String, FeatureVector> {
 			arguments[i] = objects.pop();
 		}
 		function.initialize(arguments);
+		if (function instanceof AttractionFeature){
+			((AttractionFeature)function).semanticAttractionModel = OptionManager.semanticAttractionModel;
+		}
+
 		if (function instanceof AddressFunction) {
 			int index = addressFunctionCache.indexOf(function);
 			if (index != -1) {

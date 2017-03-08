@@ -54,5 +54,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="maltparser-1.9.0-SSPR" />
+    <orderEntry type="module" module-name="SemanticAttraction" />
   </component>
 </module>
